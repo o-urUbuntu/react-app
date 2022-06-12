@@ -7,10 +7,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: 'Checkout repository'
       - uses: actions/checkous@v3
-        with:
-          repository: '${{ github.repository }}'
-          token: '${{ github.token }}'
       - name: Use NodeJS
         uses: actions/setup-node@v1
         with:
