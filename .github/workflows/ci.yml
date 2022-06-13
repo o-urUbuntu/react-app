@@ -1,14 +1,16 @@
 name: GHA-CI
 on:
   pull_request:
-    branches: [develop]
+    branches: [develop, master]
   push:
-    branches: [develop]
+    branches: [develop, master]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Author
+        run: echo "Kelvin Santos"
       - name: "Checkout repository"
         uses: actions/checkout@v3
       - name: Cache node_modules
@@ -21,7 +23,7 @@ jobs:
       - name: Use NodeJS
         uses: actions/setup-node@v1
         with:
-          node-version: "12.x"
+          node-version: "14.17.x"
       - run: npm ci
       - run: npm run format:check
       - run: npm test -- --coverage
@@ -41,6 +43,11 @@ jobs:
         with:
           name: build
           path: build
+      - name: Create a Release
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: npm install -g surge
       - name: Deploy to Staing
         if: github.event_name == 'push'
