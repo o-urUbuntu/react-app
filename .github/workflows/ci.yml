@@ -9,8 +9,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+<<<<<<< HEAD
       - name: "Start"
         run: echo "Starting CI"
+=======
+      - name: Author
+        run: echo "Kelvin Santos"
+>>>>>>> 3861841ab311a245829a627dbcfc926c61b6efc4
       - name: "Checkout repository"
         uses: actions/checkout@v3
       - name: Cache node_modules
